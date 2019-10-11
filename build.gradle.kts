@@ -43,6 +43,8 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("com.squareup.okhttp3:mockwebserver")
+    testImplementation("org.springframework.security:spring-security-test")
+
 }
 
 tasks.withType<Test> {
