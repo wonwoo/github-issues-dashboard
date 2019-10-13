@@ -9,6 +9,8 @@ import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.springframework.security.core.authority.AuthorityUtils
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
+import reactor.kotlin.test.test
 import reactor.test.StepVerifier
 
 
@@ -21,11 +23,11 @@ internal class RepositoryReactiveUserDetailsServiceTests(@Mock private val userR
     fun `find user name test`() {
 
         given(userRepository.findByFirstName(any()))
-            .willReturn(Mono.just(User(id = "123", password = "www", lastName = "lee", firstName = "wonwoo")))
+            .willReturn(User(id = "123", password = "www", lastName = "lee", firstName = "wonwoo").toMono())
 
         val userDetails = repositoryReactiveUserDetailsService.findByUsername("wonwoo")
 
-        StepVerifier.create(userDetails)
+        userDetails.test()
             .assertNext {
 
                 assertThat(it.username).isEqualTo("wonwoo")

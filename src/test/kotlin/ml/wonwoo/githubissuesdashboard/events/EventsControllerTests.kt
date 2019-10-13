@@ -20,7 +20,8 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.WebTestClient.ListBodySpec
 import org.springframework.test.web.reactive.server.expectBodyList
 import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toFlux
+import reactor.kotlin.core.publisher.toMono
 import java.time.OffsetDateTime
 
 @WebFluxTest(EventsController::class)
@@ -38,14 +39,14 @@ internal class EventsControllerTests(@Autowired private val webClient: WebTestCl
     fun `fetch events test`() {
 
         given(repository.findByRepoName(any()))
-            .willReturn(Mono.just(GithubProject(orgName = "wonwoo", repoName = "github-issues-dashboard")))
+            .willReturn(GithubProject(orgName = "wonwoo", repoName = "github-issues-dashboard").toMono())
 
-        val repositoryEvent = RepositoryEvent(Type.DEMILESTONED, OffsetDateTime.now(),
+        val repositoryEvent = listOf(RepositoryEvent(Type.DEMILESTONED, OffsetDateTime.now(),
             Actor("wonwoo", "http://localhost:1111/avatar", "http://localhost:1111/html"),
-            Issue("http://localhost:1111/html", 1110, "sboot"))
+            Issue("http://localhost:1111/html", 1110, "sboot")))
 
         given(githubClient.fetchEvents(any(), any()))
-            .willReturn(Flux.just(repositoryEvent))
+            .willReturn(repositoryEvent.toFlux())
 
         this.webClient.get()
             .uri("/events/wonwoo").accept(MediaType.APPLICATION_JSON)

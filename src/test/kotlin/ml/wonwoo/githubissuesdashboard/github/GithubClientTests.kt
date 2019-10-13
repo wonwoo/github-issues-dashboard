@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.test.StepVerifier
+import reactor.test.test
 
 internal class GithubClientTests {
 
@@ -347,7 +348,7 @@ internal class GithubClientTests {
 
         val event = githubClient.fetchEventsList("spring-projects", "spring-boot")
 
-        StepVerifier.create(event).assertNext {
+        event.test().assertNext {
 
             assertThat(it.actor.avatarUrl).isEqualTo("https://avatars0.githubusercontent.com/u/1761408?v=4")
             assertThat(it.actor.htmlUrl).isEqualTo("https://github.com/mbhave")
