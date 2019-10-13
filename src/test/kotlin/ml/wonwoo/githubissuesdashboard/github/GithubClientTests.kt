@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.client.WebClient
-import reactor.test.StepVerifier
-import reactor.test.test
+import reactor.kotlin.test.test
 
 internal class GithubClientTests {
 
