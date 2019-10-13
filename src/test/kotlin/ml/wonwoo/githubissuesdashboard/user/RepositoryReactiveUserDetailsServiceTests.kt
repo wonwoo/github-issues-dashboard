@@ -33,7 +33,5 @@ internal class RepositoryReactiveUserDetailsServiceTests(@Mock private val userR
                 assertThat(it.authorities).isEqualTo(AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_ACTUATOR", "ROLE_USER"))
 
             }.verifyComplete()
-
-
     }
 }
