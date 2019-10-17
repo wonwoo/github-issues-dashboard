@@ -1,10 +1,12 @@
 package ml.wonwoo.githubissuesdashboard
 
-import org.springframework.boot.context.properties.ImmutableConfigurationProperties
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.validation.annotation.Validated
 import javax.validation.constraints.Pattern
 
-@ImmutableConfigurationProperties("github")
+@ConfigurationProperties("github")
+@ConstructorBinding
 @Validated
 data class GithubProperties(
 
