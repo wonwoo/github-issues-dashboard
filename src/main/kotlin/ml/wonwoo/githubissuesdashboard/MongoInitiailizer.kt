@@ -8,7 +8,8 @@ import org.springframework.beans.factory.SmartInitializingSingleton
 import org.springframework.stereotype.Component
 
 @Component
-class MongoInitiailizer(private val githubProjectRepository: GithubProjectRepository, private val userRepository: UserRepository) : SmartInitializingSingleton {
+class MongoInitiailizer(private val githubProjectRepository: GithubProjectRepository,
+                        private val userRepository: UserRepository) : SmartInitializingSingleton {
 
     override fun afterSingletonsInstantiated() {
 
@@ -17,15 +18,14 @@ class MongoInitiailizer(private val githubProjectRepository: GithubProjectReposi
 
         this.userRepository.deleteAll()
             .thenMany(this.userRepository.saveAll(listOf(admin, user)))
-            .subscribe(null, null, { this.userRepository.findAll().subscribe { println(it) } })
+            .subscribe { this.userRepository.findAll().subscribe { println(it) } }
 
         val springBoot = GithubProject(orgName = "spring-projects", repoName = "spring-boot")
-        val springInitializr = GithubProject(orgName = "spring-io", repoName = "initializr")
-        val springSagan = GithubProject(orgName = "spring-io", repoName = "sagan")
+//        val springInitializr = GithubProject(orgName = "spring-io", repoName = "initializr")
+//        val springSagan = GithubProject(orgName = "spring-io", repoName = "sagan")
 
         this.githubProjectRepository.deleteAll()
-            .thenMany(this.githubProjectRepository.saveAll(listOf(springBoot, springInitializr, springSagan)))
-            .subscribe(null, null,
-                { this.githubProjectRepository.findAll().subscribe { println(it) } })
+            .thenMany(this.githubProjectRepository.saveAll(listOf(springBoot)))
+            .subscribe { this.githubProjectRepository.findAll().subscribe { println(it) } }
     }
 }

@@ -32,6 +32,9 @@ dependencies {
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 
+    implementation("com.github.ben-manes.caffeine:caffeine")
+    implementation("io.projectreactor.addons:reactor-extra")
+
     implementation("org.webjars.npm:bulma:0.7.5")
     implementation("org.webjars:font-awesome:5.11.2")
     implementation("org.webjars.bower:timeago.js:3.0.0")
